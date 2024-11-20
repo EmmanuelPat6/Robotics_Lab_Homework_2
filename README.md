@@ -54,15 +54,14 @@ The instructions to make this project work are straightforward and consist of on
     ```
 **It is necessary to give the correct commands depending on which controller was launched initially**. If this not happens, the robot, obviously, will not move.
 
-### Trajectory Selection
+## Trajectory Selection
 To change trajectory it is sufficient to change some variables in the file `ros_kdl_package/src/ros2_kdl_node.cpp`. If you want a Linear Trajectory it is necessary to impose `radius = 0` and `!=0` otherwise (possibly a low value like `0.1`). Instead, if you want a Trapezoidal Velocity Profile, it is necessary to have the parameter `acc_duration != 0`. If you want a Cubic Polynomial `acc_duration=0` is needed. So, to decide what type of trajectory the robot should do, the values of the parameters **radius** and **acc_duration** is fundamental.
 **Note**: in the file, by default, is has been imposed a simple offset of 0.1 along z-axis. If you want to implement a Linear Trajectory with Cubic Polynomial, it is advisable to change this value to 0.15 because, sometimes, there might be issues, and it may be necessary to give the instruction more than once (onli for this type of trajectory; for the others, a value of 0.1 is sufficient).
 
-### Implementation
+## Implementation
 Let's see all the possible solutions:
 
-
-***Position Controller***
+### Position Controller
 1. Launch Gazebo with a position controller
     ```shell
     ros2 launch arm_gazebo arm_gazebo.launch.py
@@ -74,7 +73,7 @@ Let's see all the possible solutions:
     After a few seconds the robot should move according to the given trajectory
 
 
-***Velocity Controller***
+### Velocity Controller
 1. Launch Gazebo with a velocity controller
     ```shell
     ros2 launch iiwa_bringup iiwa.launch.py command_interface:="velocity" robot_controller:="velocity_controller"
@@ -86,7 +85,7 @@ Let's see all the possible solutions:
     After a few seconds the robot should move according to the given trajectory
 
 
-***Effort Controller***
+### Effort Controller
 1. Launch Gazebo with an effort controller
     ```shell
     ros2 launch iiwa_bringup iiwa.launch.py command_interface:="effort" robot_controller:="effort_controller"
