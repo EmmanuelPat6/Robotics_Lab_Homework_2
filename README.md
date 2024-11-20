@@ -1,14 +1,14 @@
 # HOMEWORK_2 PATELLARO EMMANUEL P38000239 #
-# CONTROL A MANIPULATOR TO FOLLOW A TRAJECTORY #
+# 🤖 CONTROL A MANIPULATOR TO FOLLOW A TRAJECTORY 🤖 #
 This README file will show the instructions on how to build and run the Homework_2 Project 
 
 ## Features ##
-- Trapezoidal Velocity Profile and Cubic Polynomial
-- Linear and Circular Trajectories
-- Position Controller
-- Velocity Controller
-- Effort Controller with Inverse Dynamics both in Joint and Operational Spaces
-- Torque Plot
+- Trapezoidal Velocity Profile and Cubic Polynomial 📈🚀
+- Linear and Circular Trajectories ↔️🔵
+- Position Controller 📍📏
+- Velocity Controller 🏎️💨
+- Effort Controller with Inverse Dynamics both in Joint and Operational Spaces 🦾⚙️
+- Torque Plot 🔧🔨
 
 ## Available Directory in this Repository ##
 - kdl
@@ -33,7 +33,7 @@ This README file will show the instructions on how to build and run the Homework
 ## Usage
 The instructions to make this project work are straightforward and consist of only two steps:  
 
-1. An instruction to spawn the robot in Gazebo and Rviz with the appropriate **Controller**.
+1. 🤖🤖 An instruction to spawn the robot in Gazebo and Rviz with the appropriate **Controller**.
     ```shell
     ros2 launch iiwa_bringup iiwa.launch.py command_interface:="position/velocity/effort" robot_controller:="position_controller/velocity_controller/effort_controller"
     ```
@@ -45,7 +45,7 @@ The instructions to make this project work are straightforward and consist of on
 
 ⚠️⚠️⚠️ It is **NECESSARY** to act very quickly by pressing the play button in the bottom left corner to ensure the controllers are activated. If this is not done, you will need to close Gazebo, reissue the same command, and repeat the steps. You can confirm that the controllers have been loaded correctly if, after the opening RViz2, the robot is spawned in the correct way without strange behavior ⚠️⚠️⚠️
 
-3. An istruction to send *commands* to the robot, depending on the interface selected during the launch process.  
+2. 🕹️🔧 An istruction to send *commands* to the robot, depending on the interface selected during the launch process.  
     ```shell
     ros2 run ros2_kdl_package ros2_kdl_node --ros-args -p cmd_interface:=position/velocity/effort
     ```
@@ -53,16 +53,16 @@ The instructions to make this project work are straightforward and consist of on
     ```shell
     ros2 run ros2_kdl_package ros2_kdl_node
     ```
-**It is necessary to give the correct commands depending on which controller was launched initially**. If this not happens, the robot, obviously, will not move.
+**Be careful to give the correct commands depending on which controller was launched initially**. If this not happens, the robot, obviously, will not move.
 
 ## Trajectory Selection
-To change trajectory it is sufficient to change some variables in the file `ros_kdl_package/src/ros2_kdl_node.cpp` in `line 128`. If you want a Linear Trajectory it is necessary to impose `radius = 0` and `!=0` otherwise (possibly a low value like `0.1`). Instead, if you want a Trapezoidal Velocity Profile, it is necessary to have the parameter `acc_duration != 0`. If you want a Cubic Polynomial `acc_duration=0` is needed. So, to decide what type of trajectory the robot should do, the values of the parameters **radius** and **acc_duration** is fundamental.
+🛫🎯 To change trajectory it is sufficient to change some variables in the file `ros_kdl_package/src/ros2_kdl_node.cpp` in `line 128`. If you want a Linear Trajectory it is necessary to impose `radius = 0` and `!=0` otherwise (possibly a low value like `0.1`). Instead, if you want a Trapezoidal Velocity Profile, it is necessary to have the parameter `acc_duration != 0`. If you want a Cubic Polynomial `acc_duration=0` is needed. So, to decide what type of trajectory the robot should do, the values of the parameters **radius** and **acc_duration** is fundamental.
 **Note**: in the file, by default, is has been imposed a simple offset of 0.1 along z-axis. If you want to implement a Linear Trajectory with Cubic Polynomial, it is advisable to change this value to 0.15 because, sometimes, there might be issues, and it may be necessary to give the instruction more than once (onli for this type of trajectory; for the others, a value of 0.1 is sufficient).
 
 ## Implementation
 Let's see all the possible solutions:
 
-### Position Controller
+### Position Controller 📍📏
 1. Launch Gazebo with a position controller
     ```shell
     ros2 launch arm_gazebo arm_gazebo.launch.py
@@ -74,7 +74,7 @@ Let's see all the possible solutions:
     After a few seconds the robot should move according to the given trajectory
 
 
-### Velocity Controller
+### Velocity Controller 🏎️💨
 1. Launch Gazebo with a velocity controller
     ```shell
     ros2 launch iiwa_bringup iiwa.launch.py command_interface:="velocity" robot_controller:="velocity_controller"
@@ -86,8 +86,8 @@ Let's see all the possible solutions:
     After a few seconds the robot should move according to the given trajectory
 
 
-### Effort Controller
-1. Launch Gazebo with an effort controller
+### Effort Controller 🦾⚙️
+1. Launch Gazebo with an effort controller :
     ```shell
     ros2 launch iiwa_bringup iiwa.launch.py command_interface:="effort" robot_controller:="effort_controller"
     ```
