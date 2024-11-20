@@ -42,7 +42,7 @@ The instructions to make this project work are straightforward and consist of on
     ros2 launch iiwa_bringup iiwa.launch.py
     ```
    the position interface and the **position_controller** are launched
-:warning::warning::warning: It is **NECESSARY** to act very quickly by pressing the play button in the bottom left corner to ensure the controllers are activated. If this is not done, you will need to close Gazebo, reissue the same command, and repeat the steps. You can confirm that the controllers have been loaded correctly if, after the opening RViz2, the robot is spawned in the correct way without strange behavior.
+:warning: It is **NECESSARY** to act very quickly by pressing the play button in the bottom left corner to ensure the controllers are activated. If this is not done, you will need to close Gazebo, reissue the same command, and repeat the steps. You can confirm that the controllers have been loaded correctly if, after the opening RViz2, the robot is spawned in the correct way without strange behavior. :warning:
 
 2. An istruction to send *commands* to the robot, depending on the interface selected during the launch process.  
     ```shell
