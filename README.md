@@ -33,7 +33,7 @@ This README file will show the instructions on how to build and run the Homework
 ## Usage
 The instructions to make this project work are straightforward and consist of only two steps:  
 
-1. An instruction to spawn the robot in Gazebo and Rviz with the appropriate *Controller*.
+1. An instruction to spawn the robot in Gazebo and Rviz with the appropriate **Controller**.
     ```shell
     ros2 launch iiwa_bringup iiwa.launch.py command_interface:="position/velocity/effort" robot_controller:="position_controller/velocity_controller/effort_controller"
     ```
@@ -41,8 +41,8 @@ The instructions to make this project work are straightforward and consist of on
     ```shell
     ros2 launch iiwa_bringup iiwa.launch.py
     ```
-   the position interface and the *position_controller* are launched
-:warning::warning::warning: It is *NECESSARY* to act very quickly by pressing the play button in the bottom left corner to ensure the controllers are activated. If this is not done, you will need to close Gazebo, reissue the same command, and repeat the steps. You can confirm that the controllers have been loaded correctly if, after the opening RViz2, the robot is spawned in the correct way without strange behavior.
+   the position interface and the **position_controller** are launched
+:warning::warning::warning: It is **NECESSARY** to act very quickly by pressing the play button in the bottom left corner to ensure the controllers are activated. If this is not done, you will need to close Gazebo, reissue the same command, and repeat the steps. You can confirm that the controllers have been loaded correctly if, after the opening RViz2, the robot is spawned in the correct way without strange behavior.
 
 2. An istruction to send *commands* to the robot, depending on the interface selected during the launch process.  
     ```shell
@@ -54,40 +54,51 @@ The instructions to make this project work are straightforward and consist of on
     ```
    **It is necessary to give the correct commands depending on which controller was launched initially**. If this not happens, the robot, obviously, will not move.
 
+### Trajectory Selection
+To change trajectory it is sufficient to change some variables in the file `ros_kdl_package/src/ros2_kdl_node.cpp`. If you want a Linear Trajectory it is necessary to impose `radius = 0` and `!=0` otherwise (possibly a low value like `0.1`). Instead, if you want a Trapezoidal Velocity Profile, it is necessary to have the parameter `acc_duration != 0`. If you want a Cubic Polynomial `acc_duration=0` is needed. So, to decide what type of trajectory the robot should do, the values of the parameters **radius** and **acc_duration** is fundamental.
+**Note**: in the file, by default, is has been imposed a simple offset of 0.1 along z-axis. If you want to implement a Linear Trajectory with Cubic Polynomial, it is advisable to change this value to 0.15 because, sometimes, there might be issues, and it may be necessary to give the instruction more than once (ONLY FOR THIS TYPE OF TRAJECTORY; FOR THE OTHERS, A VALUE OF 0.1 IS SUFFICIENT).
+
 ### Implementation
-1. Launch `arm_gazebo.launch.py`  in a sourced terminal run
+Let's see all the possible solutions:
+
+
+##Position Controller
+1. Launch Gazebo with a position controller
     ```shell
     ros2 launch arm_gazebo arm_gazebo.launch.py
     ```
-2. Run Publisher and Subscriber contained in `arm_controller_node.cpp` in another terminal
+2. Send position commands to the robot
     ```shell
     ros2 run arm_control arm_controller
     ```
-    After a few seconds the robot should move and in the terminal, the various joint variables value will be displayed.
+    After a few seconds the robot should move according to the given trajectory
 
-3. To view the robot in RViz2, run in another terminal (only if `arm_gazebo.launch.py` is already launched)
+
+##Velocity Controller
+1. Launch Gazebo with a velocity controller
     ```shell
-    ros2 launch arm_description display.launch.py
+    ros2 launch iiwa_bringup iiwa.launch.py command_interface:="velocity" robot_controller:="velocity_controller"
     ```
-    The image viewed by the camera will also be displayed automatically.
+2. Send velocity commands to the robot
+    ```shell
+    ros2 run ros2_kdl_package ros2_kdl_node --ros-args -p cmd_interface:=velocity
+    ```
+    After a few seconds the robot should move according to the given trajectory
 
-4. To show the image captured by the camera separately, it is possible to see it through `rqt_image_view`. Run
+
+##Effort Controller
+1. Launch Gazebo with an effort controller
+    ```shell
+    ros2 launch iiwa_bringup iiwa.launch.py command_interface:="effort" robot_controller:="effort_controller"
+    ```
+2. Send effort commands to the robot
+    ```shell
+    ros2 run ros2_kdl_package ros2_kdl_node --ros-args -p cmd_interface:=effort
+    ```
+    After a few seconds the robot should move according to the given trajectory
+3. To view torques sent to the robot run
     ```shell
     rqt
     ```
-    and go in `Plugins->Visualization->Image View` and select `/videocamera`.
+    and go in `Plugins->Visualization->Plot` and add `/effort_controller/commands/data[0]`, then `/effort_controller/commands/data[1]` up to `/effort_controller/commands/data[6]`
 
-    To appreciate the camera behavior, it is possible to add some objects in the `Gazebo Environment`.
-
-5. To give other commands to the robot, it is necessary to stop the `arm_controller` node (in which there are the Publisher and the Subscriber). It is both possible to use this command
-    ```shell
-    ros2 topic pub /position_controller/commands std_msgs/msg/Float64MultiArray "data: [0.0, 0.0, 0.0, 0.0]" 
-    ```
-    with the desired joint positions, or run the New Publisher (not required by the project specifications) which allows to give these values directly from the terminal without the entire command but simply by entering the values separated by a space.
-   ```shell
-    ros2 run arm_control publisher_terminal
-    ```
-    In this case, to keep track of the joint position values, it is necessary to do
-   ```shell
-    ros2 topic echo /joint_states
-    ```
