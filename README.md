@@ -57,6 +57,7 @@ The instructions to make this project work are straightforward and consist of on
 
 ## Trajectory Selection 🎯
 ✈️ To change trajectory it is sufficient to change some variables in the file `ros_kdl_package/src/ros2_kdl_node.cpp` in `line 128`. If you want a Linear Trajectory it is necessary to impose `radius = 0` and `!=0` otherwise (possibly a low value like `0.1`). Instead, if you want a Trapezoidal Velocity Profile, it is necessary to have the parameter `acc_duration != 0`. If you want a Cubic Polynomial `acc_duration=0` is needed. So, to decide what type of trajectory the robot should do, the values of the parameters **radius** and **acc_duration** is fundamental.
+ 
 **Note**: in the file, by default, is has been imposed a simple offset of 0.1 along z-axis. If you want to implement a Linear Trajectory with Cubic Polynomial, it is advisable to change this value to 0.15 because, sometimes, there might be issues, and it may be necessary to give the instruction more than once (onli for this type of trajectory; for the others, a value of 0.1 is sufficient).
 
 ## Implementation 💻
@@ -103,4 +104,6 @@ Let's see all the possible solutions:
     and go in `Plugins->Visualization->Plot` and add `/effort_controller/commands/data[0]`, then `/effort_controller/commands/data[1]` up to `/effort_controller/commands/data[6]`
 ## Inverse Dynamics Control in the Operational Space 🔬
 By default, the Inverse Dynamics Controller implemented is the Joint Space one. Instead, to implement an Inverse Dynamics Controller in the Operational Space it is sufficient to comment, in the file `ros_kdl_package/src/ros2_kdl_node.cpp`, `line 346`: `joint_efforts_.data = controller_.idCntr(joint_positions_, joint_velocities_, joint_accelerations_, 40, 20);` and uncomment `line 348`: `joint_efforts_.data = controller_.idCntr(cartpos, des_vel, des_acc, 40, 30, 20, 15);`. It is sufficient to run the same commands as in the previous case.
+ 
+⚠️ To achieve a satisfactory result, take into account the comments provided in the parameter selection section. This final control, in fact, requires lower acceleration (where it is present) then the other one ⚠️
 
