@@ -8,7 +8,7 @@ This README file will show the instructions on how to build and run the Homework
 - Position Controller 📍📏
 - Velocity Controller 🏎️💨
 - Effort Controller with Inverse Dynamics both in Joint and Operational Spaces 🦾⚙️
-- Torque Plot 🔧🔨
+- Torques Plot 🔧🔨
 
 ## Available Directory in this Repository 📂 ##
 - kdl
