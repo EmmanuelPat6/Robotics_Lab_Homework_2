@@ -107,3 +107,27 @@ By default, the Inverse Dynamics Controller implemented is the Joint Space one. 
  
 ⚠️ To achieve a satisfactory result, take into account the comments provided in the parameter selection section. This final control, in fact, requires lower acceleration (where it is present) then the other one. Instead, ONLY for the Linear Trajectory with Cubic Polynomial it is necessary to increase a little bit more the trajectory duration (from 6 to 10)⚠️
 
+## Recap Parameters 🧠
+Since the choice of parameters (`lines 129-134`) is crucial for the selection and proper functioning of the system, here is a brief recap of the parameters to be used for each specific trajectory:
+### Position and Velocity Control
+- Linear Trajectory with Trapezoidal Velocity Profile: `acc_duration=0.7` `radius=0.0` `traj_duration=1.5`
+- Linear Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.0` `traj_duration=1.5`
+- Circular Trajectory with Trapezoidal Velocity Profile: `acc_duration=0.7` `radius=0.1` `traj_duration=1.5`
+- Circular Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.1` `traj_duration=1.5`
+
+### Effort Control
+**Inverse Dynamics Joint Space Control**
+- Linear Trajectory with Trapezoidal Velocity Profile: `acc_duration=3.5` `radius=0.0` `traj_duration=6.0`
+- Linear Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.0` `traj_duration=6.0`
+- Circular Trajectory with Trapezoidal Velocity Profile: `acc_duration=3.5` `radius=0.1` `traj_duration=6.0`
+- Circular Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.1` `traj_duration=6.0`
+
+**Inverse Dynamics Operational Space Control**
+- Linear Trajectory with Trapezoidal Velocity Profile: `acc_duration=1.0` `radius=0.0` `traj_duration=6.0`
+- Linear Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.0` `traj_duration=10.0`
+- Circular Trajectory with Trapezoidal Velocity Profile: `acc_duration=2.5` `radius=0.1` `traj_duration=6.0`
+- Circular Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.1` `traj_duration=6.0`
+
+For further considerations regarding the choice of parameters, refer to the comments within the code and the report.
+
+⛔ **No functions have been implemented to input parameters from the command line in such a way to provide greater control and to ensure safer parameter selection.**
