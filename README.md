@@ -105,5 +105,5 @@ Let's see all the possible solutions:
 ## Inverse Dynamics Control in the Operational Space 🔬
 By default, the Inverse Dynamics Controller implemented is the Joint Space one. Instead, to implement an Inverse Dynamics Controller in the Operational Space it is sufficient to comment, in the file `ros_kdl_package/src/ros2_kdl_node.cpp`, from `line 332` to `line 346` (it is important to comment all these line and not only the one of the idCntr in the joint space) and uncomment `line 348`: `joint_efforts_.data = controller_.idCntr(cartpos, des_vel, des_acc, 40, 30, 20, 15);`. It is sufficient to run the same commands as in the previous case.
  
-⚠️ To achieve a satisfactory result, take into account the comments provided in the parameter selection section. This final control, in fact, requires lower acceleration (where it is present) then the other one ⚠️
+⚠️ To achieve a satisfactory result, take into account the comments provided in the parameter selection section. This final control, in fact, requires lower acceleration (where it is present) then the other one. Instead, ONLY for the Linear Trajectory with Cubic Polynomial it is necessary to increase a little bit more the trajectory duration (from 6 to 10)⚠️
 
