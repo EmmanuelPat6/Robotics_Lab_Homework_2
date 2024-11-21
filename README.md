@@ -124,7 +124,7 @@ Since the choice of parameters (`lines 129-134`) is crucial for the selection an
 
 **Inverse Dynamics Operational Space Control**
 - Linear Trajectory with Trapezoidal Velocity Profile: `acc_duration=1.0` `radius=0.0` `traj_duration=6.0`
-- Linear Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.0` `traj_duration=10.0`
+- Linear Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.0` `traj_duration=10.0` `total_time=10.0`
 - Circular Trajectory with Trapezoidal Velocity Profile: `acc_duration=2.5` `radius=0.1` `traj_duration=6.0`
 - Circular Trajectory with Cubic Polynomial: `acc_duration=0.0` `radius=0.1` `traj_duration=6.0`
 
