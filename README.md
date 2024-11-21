@@ -66,11 +66,11 @@ Let's see all the possible solutions:
 ### Position Controller 📍📏
 1. Launch Gazebo with a position controller
     ```shell
-    ros2 launch arm_gazebo arm_gazebo.launch.py
+    ros2 launch iiwa_bringup iiwa.launch.py
     ```
 2. Send position commands to the robot
     ```shell
-    ros2 run arm_control arm_controller
+    ros2 run ros2_kdl_package ros2_kdl_node
     ```
     After a few seconds the robot should move according to the given trajectory
 
